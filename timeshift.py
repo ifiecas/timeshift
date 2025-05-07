@@ -354,7 +354,7 @@ if not st.session_state.auth_status:
             else:
                 st.error("Invalid code")
     
-    st.markdown('<div class="footer">Behind the Build: <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
+    st.markdown('<div class="footer">Built for Fun and Learning: <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
 
 # =============================
 # Main App
@@ -425,4 +425,4 @@ else:
     if not (role and generate):
         pass
     
-    st.markdown('<div class="footer">Behind the Build: <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
+    st.markdown('<div class="footer">Built for Fun and Learning: <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
