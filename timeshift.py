@@ -14,20 +14,28 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Minimalist CSS styling
+# Minimalist CSS styling with Helvetica font
 st.markdown("""
 <style>
-    /* Clean typography */
+    /* Typography using Helvetica */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
     
     body {
-        font-family: 'Inter', sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         color: #333;
         background-color: #FFFFFF;
     }
     
+    /* Header image styling */
+    .header-image {
+        width: 100%;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    }
+    
     /* Minimalist header styling */
     h1 {
+        font-family: Helvetica, Arial, sans-serif;
         font-weight: 500;
         color: #333;
         font-size: 2rem;
@@ -35,6 +43,7 @@ st.markdown("""
     }
     
     h2, h3 {
+        font-family: Helvetica, Arial, sans-serif;
         color: #333;
         font-weight: 500;
         font-size: 1.5rem;
@@ -43,6 +52,7 @@ st.markdown("""
     
     /* Clean button styling */
     .stButton button {
+        font-family: Helvetica, Arial, sans-serif;
         background-color: #0056D6;
         color: white;
         border-radius: 4px;
@@ -54,6 +64,7 @@ st.markdown("""
     
     /* Minimal input styling */
     .stTextInput input {
+        font-family: Helvetica, Arial, sans-serif;
         border-radius: 4px;
         border: 1px solid #E0E0E0;
         padding: 0.5rem;
@@ -80,6 +91,7 @@ st.markdown("""
     
     /* Info message styling */
     .info-msg {
+        font-family: Helvetica, Arial, sans-serif;
         background-color: #F7F7F7;
         padding: 1rem;
         margin-bottom: 1rem;
@@ -89,6 +101,7 @@ st.markdown("""
     
     /* Footer styling */
     .footer {
+        font-family: Helvetica, Arial, sans-serif;
         margin-top: 3rem;
         text-align: center;
         font-size: 0.8rem;
@@ -98,11 +111,13 @@ st.markdown("""
     
     /* Comparison sections */
     .year-section {
+        font-family: Helvetica, Arial, sans-serif;
         padding: 1rem 0;
         border-bottom: 1px solid #EEEEEE;
     }
     
     .transform-section {
+        font-family: Helvetica, Arial, sans-serif;
         padding: 1rem 0;
         background-color: #F8F8F8;
         border-left: 3px solid #0056D6;
@@ -112,11 +127,13 @@ st.markdown("""
     
     /* Bullet point styling */
     ul {
+        font-family: Helvetica, Arial, sans-serif;
         padding-left: 1.2rem;
         margin-top: 0.5rem;
     }
     
     li {
+        font-family: Helvetica, Arial, sans-serif;
         margin-bottom: 0.5rem;
         line-height: 1.4;
     }
@@ -130,6 +147,11 @@ st.markdown("""
         .card, .results {
             padding: 1rem;
         }
+    }
+    
+    /* Override all text with Helvetica */
+    * {
+        font-family: Helvetica, Arial, sans-serif !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -282,7 +304,9 @@ def format_result(result_text, role):
 # Login Page
 # =============================
 if not st.session_state.auth_status:
-    st.title("⏳ TimeShift")
+    # Display header image
+    st.markdown('<img src="https://i.postimg.cc/jjQn9sVt/Picture-1.png" class="header-image">', unsafe_allow_html=True)
+    
     st.write("Compare professional roles: 1995 vs 2025")
     
     with st.container():
@@ -291,24 +315,25 @@ if not st.session_state.auth_status:
         if st.button("Enter TimeShift", use_container_width=True):
             if code_input == ACCESS_CODE:
                 st.session_state.auth_status = True
-                st.rerun()  # Updated from experimental_rerun
+                st.rerun()
             else:
                 st.error("Invalid code")
     
-    st.markdown('<div class="footer">© 2025 TimeShift</div>', unsafe_allow_html=True)
+    st.markdown('<div class="footer">Behind the Build: <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
 
 # =============================
 # Main App
 # =============================
 else:
-    # Header with sign-out option
+    # Display header image
+    st.markdown('<img src="https://i.postimg.cc/jjQn9sVt/Picture-1.png" class="header-image">', unsafe_allow_html=True)
+    
+    # Sign-out button
     col1, col2 = st.columns([5, 1])
-    with col1:
-        st.title("⏳ TimeShift")
     with col2:
         if st.button("Sign Out"):
             st.session_state.auth_status = False
-            st.rerun()  # Updated from experimental_rerun
+            st.rerun()
     
     # Input section
     with st.container():
