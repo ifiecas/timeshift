@@ -221,10 +221,10 @@ def fetch_timeshift_story(role):
                 [Role-specific bullet points about the exact tools, processes, and environment a {role} uses in 2025]
                 
                 What Was Impossible Then, Now Possible:
-                [3 specific transformative changes that would be MOST RELEVANT to a {role} - focus on game-changing capabilities that specifically transform how someone in this exact role works today]
+                [THE SINGLE MOST CRITICAL TRANSFORMATION for a {role} between 1995 and 2025. What is the one game-changing capability that would be utterly unimaginable to a {role} in 1995 but is now routine? Describe in detail why this change is so revolutionary for this specific role.]
                 
                 Every single bullet point must directly connect to the {role}'s daily work. Avoid generic enterprise software facts that aren't directly relevant to this specific role. Use concrete examples, specific tool names, and realistic workflows."""},
-                {"role": "user", "content": f"My role is {role}. Create a highly personalized comparison showing how my specific job has evolved from 1995 to 2025, focusing on the tools, processes, and environment I would have used then versus now. For the third section, highlight the most dramatic transformations specifically relevant to someone in my role."}
+                {"role": "user", "content": f"My role is {role}. Create a highly personalized comparison showing how my specific job has evolved from 1995 to 2025, focusing on the tools, processes, and environment I would have used then versus now. For the third section, identify the SINGLE MOST CRITICAL technological transformation specifically relevant to someone in my role - what would have been completely impossible in 1995 that's now routine?"}
             ],
             temperature=0.7,  # Slightly higher temperature for more creative, personalized responses
             max_tokens=800    # Increased token limit for more detailed responses
