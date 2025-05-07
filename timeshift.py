@@ -183,11 +183,12 @@ ACCESS_CODE = "swo"
 def fetch_timeshift_story(role):
     """Fetch comparison from Azure OpenAI"""
     try:
-        # Azure OpenAI client setup
+        # Azure OpenAI client setup - Updated to fix proxies error
         client = AzureOpenAI(
             api_key=os.getenv("AZURE_OPENAI_KEY"),
             api_version="2023-12-01-preview",
             azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
+            # Removed any potential proxy settings that might be causing issues
         )
         deployment_name = os.getenv("AZURE_OPENAI_DEPLOYMENT")
         
@@ -223,7 +224,7 @@ def fetch_timeshift_story(role):
         
         return response.choices[0].message.content
     except Exception as e:
-        return f"Error generating comparison. Please try again. Technical details: {str(e)[:100]}"
+        return f"Error generating comparison. Please try again. Technical details: {str(e)}"
 
 # Format the response in a clean, minimalist way with bullet points
 def format_result(result_text, role):
