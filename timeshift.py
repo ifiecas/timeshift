@@ -36,7 +36,7 @@ st.markdown("""
     body {
         font-family: Helvetica, Arial, sans-serif;
         color: #333;
-        background-color: #FFFFFF;
+        background-color: #FAF9F6;
     }
     
     /* Header image styling */
@@ -165,6 +165,16 @@ st.markdown("""
     /* Override all text with Helvetica */
     * {
         font-family: Helvetica, Arial, sans-serif !important;
+    }
+    
+    /* Set the background color for the entire app */
+    .stApp {
+        background-color: #FAF9F6;
+    }
+    
+    /* Ensure background color is consistent */
+    .main .block-container {
+        background-color: #FAF9F6;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -314,12 +324,11 @@ def format_result(result_text, role):
     
     return formatted_text
 
-# =============================
 # Login Page
 # =============================
 if not st.session_state.auth_status:
     # Display header image using requests to fetch first
-    header_image_url = "https://i.postimg.cc/jjQn9sVt/Picture-1.png"
+    header_image_url = "https://i.postimg.cc/yYs1QF1g/pic2.png"
     img = load_image_from_url(header_image_url)
     if img:
         st.image(img, use_container_width=True)
@@ -328,7 +337,7 @@ if not st.session_state.auth_status:
         st.markdown("""
         <div style="text-align: center; margin-bottom: 20px;">
             <a href='https://postimages.org/' target='_blank'>
-                <img src='https://i.postimg.cc/jjQn9sVt/Picture-1.png' width="100%" alt='TimeShift Logo'/>
+                <img src='https://i.postimg.cc/yYs1QF1g/pic2.png' width="100%" alt='TimeShift Logo'/>
             </a>
         </div>
         """, unsafe_allow_html=True)
@@ -352,7 +361,7 @@ if not st.session_state.auth_status:
 # =============================
 else:
     # Display header image using requests to fetch first
-    header_image_url = "https://i.postimg.cc/jjQn9sVt/Picture-1.png"
+    header_image_url = "https://i.postimg.cc/yYs1QF1g/pic2.png"
     img = load_image_from_url(header_image_url)
     if img:
         st.image(img, use_container_width=True)
@@ -361,7 +370,7 @@ else:
         st.markdown("""
         <div style="text-align: center; margin-bottom: 20px;">
             <a href='https://postimages.org/' target='_blank'>
-                <img src='https://i.postimg.cc/jjQn9sVt/Picture-1.png' width="100%" alt='TimeShift Logo'/>
+                <img src='https://i.postimg.cc/yYs1QF1g/pic2.png' width="100%" alt='TimeShift Logo'/>
             </a>
         </div>
         """, unsafe_allow_html=True)
