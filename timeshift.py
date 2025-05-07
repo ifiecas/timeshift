@@ -215,7 +215,7 @@ def fetch_timeshift_story(role):
                 Format your response in a clean, minimalist style with these sections, IN THIS EXACT ORDER:
                 
                 Impossible Then, Possible Now:
-                [THE SINGLE MOST CRITICAL TRANSFORMATION for a {role} between 1995 and 2025. What is the one game-changing capability that would be utterly unimaginable to a {role} in 1995 but is now routine? Describe in detail why this change is so revolutionary for this specific role.]
+                [Start with "In 1995..." and describe THE SINGLE MOST CRITICAL TRANSFORMATION for a {role} between 1995 and 2025. What is the one game-changing capability that would be utterly unimaginable to a {role} in 1995 but is now routine? Describe in detail why this change is so revolutionary for this specific role.]
                 
                 1995: 
                 [Role-specific bullet points about the exact tools, processes, and environment a {role} would have used in 1995]
@@ -224,7 +224,7 @@ def fetch_timeshift_story(role):
                 [Role-specific bullet points about the exact tools, processes, and environment a {role} uses in 2025]
                 
                 Every point must directly connect to the {role}'s daily work. Avoid generic enterprise software facts that aren't directly relevant to this specific role. Use concrete examples, specific tool names, and realistic workflows."""},
-                {"role": "user", "content": f"My role is {role}. Create a highly personalized comparison with the following format: 1) Start with the SINGLE MOST CRITICAL technological transformation for my role - what would have been completely impossible in 1995 that's now routine? Put this at the top as 'Impossible Then, Possible Now'. 2) Then show how my job has evolved from 1995 to 2025 with specific tools and processes I would have used then versus now."}
+                {"role": "user", "content": f"My role is {role}. Create a highly personalized comparison with the following format: 1) Start with the SINGLE MOST CRITICAL technological transformation for my role - what would have been completely impossible in 1995 that's now routine? Begin this section with 'In 1995...' and put it at the top as 'Impossible Then, Possible Now'. 2) Then show how my job has evolved from 1995 to 2025 with specific tools and processes I would have used then versus now."}
             ],
             temperature=0.7,  # Slightly higher temperature for more creative, personalized responses
             max_tokens=800    # Increased token limit for more detailed responses
