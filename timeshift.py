@@ -3,9 +3,22 @@ from openai import AzureOpenAI
 import os
 from datetime import datetime
 from dotenv import load_dotenv
+import requests
+from io import BytesIO
+from PIL import Image as PILImage
 
 # Load environment variables
 load_dotenv()
+
+# Function to load image from URL
+def load_image_from_url(url):
+    try:
+        response = requests.get(url)
+        img = PILImage.open(BytesIO(response.content))
+        return img
+    except Exception as e:
+        st.error(f"Error loading image: {e}")
+        return None
 
 # Set Streamlit page config
 st.set_page_config(
@@ -304,8 +317,20 @@ def format_result(result_text, role):
 # Login Page
 # =============================
 if not st.session_state.auth_status:
-    # Display header image using Streamlit's image function
-    st.image("https://i.postimg.cc/jjQn9sVt/Picture-1.png", use_container_width=True)
+    # Display header image using requests to fetch first
+    header_image_url = "https://i.postimg.cc/jjQn9sVt/Picture-1.png"
+    img = load_image_from_url(header_image_url)
+    if img:
+        st.image(img, use_container_width=True)
+    else:
+        # Fallback to a more direct HTML approach if loading fails
+        st.markdown("""
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href='https://postimages.org/' target='_blank'>
+                <img src='https://i.postimg.cc/jjQn9sVt/Picture-1.png' width="100%" alt='TimeShift Logo'/>
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.write("Compare professional roles: 1995 vs 2025")
     
@@ -325,8 +350,20 @@ if not st.session_state.auth_status:
 # Main App
 # =============================
 else:
-    # Display header image using Streamlit's image function
-    st.image("https://i.postimg.cc/jjQn9sVt/Picture-1.png", use_container_width=True)
+    # Display header image using requests to fetch first
+    header_image_url = "https://i.postimg.cc/jjQn9sVt/Picture-1.png"
+    img = load_image_from_url(header_image_url)
+    if img:
+        st.image(img, use_container_width=True)
+    else:
+        # Fallback to a more direct HTML approach if loading fails
+        st.markdown("""
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href='https://postimages.org/' target='_blank'>
+                <img src='https://i.postimg.cc/jjQn9sVt/Picture-1.png' width="100%" alt='TimeShift Logo'/>
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Sign-out button
     col1, col2 = st.columns([5, 1])
