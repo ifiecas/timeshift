@@ -338,7 +338,7 @@ if not st.session_state.auth_status:
     st.write("Compare professional roles: 1995 vs 2025")
     
     with st.container():
-        st.markdown('<div class="info-msg">Enter access code to compare how enterprise software roles have evolved over three decades.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="info-msg">Enter your code to discover how job roles and skills have shifted over the past 30 years.</div>', unsafe_allow_html=True)
         code_input = st.text_input("Access code:", type="password")
         if st.button("Enter TimeShift", use_container_width=True):
             if code_input == ACCESS_CODE:
