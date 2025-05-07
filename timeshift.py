@@ -212,7 +212,10 @@ def fetch_timeshift_story(role):
                 
                 Research deeply into the specific challenges, tools, and workflows that a "{role}" would have experienced in 1995 versus 2025. Include industry-specific technologies, methodologies, and business practices that directly relate to this role.
                 
-                Format your response in a clean, minimalist style with three sections:
+                Format your response in a clean, minimalist style with these sections, IN THIS EXACT ORDER:
+                
+                Impossible Then, Possible Now:
+                [THE SINGLE MOST CRITICAL TRANSFORMATION for a {role} between 1995 and 2025. What is the one game-changing capability that would be utterly unimaginable to a {role} in 1995 but is now routine? Describe in detail why this change is so revolutionary for this specific role.]
                 
                 1995: 
                 [Role-specific bullet points about the exact tools, processes, and environment a {role} would have used in 1995]
@@ -220,11 +223,8 @@ def fetch_timeshift_story(role):
                 2025: 
                 [Role-specific bullet points about the exact tools, processes, and environment a {role} uses in 2025]
                 
-                What Was Impossible Then, Now Possible:
-                [THE SINGLE MOST CRITICAL TRANSFORMATION for a {role} between 1995 and 2025. What is the one game-changing capability that would be utterly unimaginable to a {role} in 1995 but is now routine? Describe in detail why this change is so revolutionary for this specific role.]
-                
-                Every single bullet point must directly connect to the {role}'s daily work. Avoid generic enterprise software facts that aren't directly relevant to this specific role. Use concrete examples, specific tool names, and realistic workflows."""},
-                {"role": "user", "content": f"My role is {role}. Create a highly personalized comparison showing how my specific job has evolved from 1995 to 2025, focusing on the tools, processes, and environment I would have used then versus now. For the third section, identify the SINGLE MOST CRITICAL technological transformation specifically relevant to someone in my role - what would have been completely impossible in 1995 that's now routine?"}
+                Every point must directly connect to the {role}'s daily work. Avoid generic enterprise software facts that aren't directly relevant to this specific role. Use concrete examples, specific tool names, and realistic workflows."""},
+                {"role": "user", "content": f"My role is {role}. Create a highly personalized comparison with the following format: 1) Start with the SINGLE MOST CRITICAL technological transformation for my role - what would have been completely impossible in 1995 that's now routine? Put this at the top as 'Impossible Then, Possible Now'. 2) Then show how my job has evolved from 1995 to 2025 with specific tools and processes I would have used then versus now."}
             ],
             temperature=0.7,  # Slightly higher temperature for more creative, personalized responses
             max_tokens=800    # Increased token limit for more detailed responses
@@ -238,13 +238,40 @@ def fetch_timeshift_story(role):
 def format_result(result_text, role):
     formatted_text = ""
     
-    # Split into sections and process
-    if "1995:" in result_text:
-        parts = result_text.split("1995:")
+    # Check if the response contains the new "Impossible Then, Possible Now" section
+    if "Impossible Then, Possible Now:" in result_text:
+        parts = result_text.split("Impossible Then, Possible Now:")
         pre_text = parts[0]
         rest = parts[1]
         
         if pre_text.strip():
+            formatted_text += f'<div>{pre_text}</div>'
+        
+        # Find where 1995 section starts
+        if "1995:" in rest:
+            transformation_parts = rest.split("1995:")
+            transformation_text = transformation_parts[0]
+            rest = "1995:" + transformation_parts[1]
+            
+            # Format the transformation section first - at the top
+            formatted_text += f'<div class="transform-section"><strong>What Was Impossible for {role}s Then, Now Possible</strong><p>{transformation_text.strip()}</p></div>'
+        else:
+            # If no 1995 section, just use all the rest as transformation
+            formatted_text += f'<div class="transform-section"><strong>What Was Impossible for {role}s Then, Now Possible</strong><p>{rest.strip()}</p></div>'
+            rest = ""
+    
+    # Process 1995 and 2025 sections if they exist
+    if "1995:" in result_text:
+        # If we've already processed part of the text above, use the 'rest' variable
+        if "Impossible Then, Possible Now:" in result_text:
+            parts = rest.split("1995:")
+        else:
+            parts = result_text.split("1995:")
+        
+        pre_text = parts[0] if not "Impossible Then, Possible Now:" in result_text else ""
+        rest = parts[1]
+        
+        if pre_text.strip() and not "Impossible Then, Possible Now:" in result_text:
             formatted_text += f'<div>{pre_text}</div>'
         
         if "2025:" in rest:
@@ -272,23 +299,9 @@ def format_result(result_text, role):
         
         # Process 2025 section if it exists
         if rest:
-            tip_split = None
-            for tip in ["Tips:", "Adaptation Tips:", "Practical Tips:"]:
-                if tip in rest:
-                    tip_parts = rest.split(tip)
-                    year_2025 = tip_parts[0]
-                    tips_text = tip_parts[1]
-                    tip_split = True
-                    break
-            
-            if not tip_split:
-                year_2025 = rest
-                tips_text = ""
-            
-            # Format 2025 section
             formatted_text += '<div class="year-section"><strong>2025</strong><ul>'
             
-            lines = year_2025.strip().split('\n')
+            lines = rest.strip().split('\n')
             for line in lines:
                 clean_line = line.strip()
                 if clean_line:
@@ -298,24 +311,6 @@ def format_result(result_text, role):
                         formatted_text += f'<li>{clean_line}</li>'
             
             formatted_text += '</ul></div>'
-            
-            # Format tips section if it exists, with dynamic title based on role
-            if tips_text:
-                # Create a dynamic header based on the role
-                dynamic_header = f"What Was Impossible for {role}s Then, Now Possible"
-                
-                formatted_text += f'<div class="transform-section"><strong>{dynamic_header}</strong><ul>'
-                
-                lines = tips_text.strip().split('\n')
-                for line in lines:
-                    clean_line = line.strip()
-                    if clean_line:
-                        if clean_line.startswith('•') or clean_line.startswith('-') or clean_line.startswith('*'):
-                            formatted_text += f'<li>{clean_line[1:].strip()}</li>'
-                        else:
-                            formatted_text += f'<li>{clean_line}</li>'
-                
-                formatted_text += '</ul></div>'
     else:
         # If the text doesn't follow the expected format, just return it as is
         formatted_text = f'<div>{result_text}</div>'
