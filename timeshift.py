@@ -304,8 +304,8 @@ def format_result(result_text, role):
 # Login Page
 # =============================
 if not st.session_state.auth_status:
-    # Display header image
-    st.markdown('<img src="https://i.postimg.cc/jjQn9sVt/Picture-1.png" class="header-image">', unsafe_allow_html=True)
+    # Display header image using Streamlit's image function
+    st.image("https://i.postimg.cc/jjQn9sVt/Picture-1.png", use_container_width=True)
     
     st.write("Compare professional roles: 1995 vs 2025")
     
@@ -325,8 +325,8 @@ if not st.session_state.auth_status:
 # Main App
 # =============================
 else:
-    # Display header image
-    st.markdown('<img src="https://i.postimg.cc/jjQn9sVt/Picture-1.png" class="header-image">', unsafe_allow_html=True)
+    # Display header image using Streamlit's image function
+    st.image("https://i.postimg.cc/jjQn9sVt/Picture-1.png", use_container_width=True)
     
     # Sign-out button
     col1, col2 = st.columns([5, 1])
