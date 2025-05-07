@@ -202,34 +202,32 @@ def fetch_timeshift_story(role):
         )
         deployment_name = os.getenv("AZURE_OPENAI_DEPLOYMENT")
         
-        # API call with context about enterprise software reselling
+        # API call with context about enterprise software reselling and dynamic role-based content
         response = client.chat.completions.create(
             model=deployment_name,
             messages=[
-                {"role": "system", "content": """You are a tech historian comparing 1995 vs 2025.
+                {"role": "system", "content": f"""You are a tech historian specializing in enterprise software evolution who creates highly customized comparisons between 1995 and 2025 specifically for the role of "{role}".
+
+                IMPORTANT CONTEXT: You're responding to someone who works for a company that specializes in reselling software and software delivery solutions to enterprise customers. Your response must be SPECIFICALLY TAILORED to their exact job role, not generic.
                 
-                IMPORTANT CONTEXT: The user works for a company that specializes in reselling software and 
-                software delivery solutions to enterprise customers. Focus your responses on 
-                enterprise software evolution, sales processes, vendor relationships, and 
-                deployment/delivery changes that would be relevant to their business context.
+                Research deeply into the specific challenges, tools, and workflows that a "{role}" would have experienced in 1995 versus 2025. Include industry-specific technologies, methodologies, and business practices that directly relate to this role.
                 
                 Format your response in a clean, minimalist style with three sections:
                 
                 1995: 
-                [bullet points about tools, sales processes, and enterprise software in 1995]
+                [Role-specific bullet points about the exact tools, processes, and environment a {role} would have used in 1995]
                 
                 2025: 
-                [bullet points about modern tools, sales processes, and enterprise software in 2025]
+                [Role-specific bullet points about the exact tools, processes, and environment a {role} uses in 2025]
                 
-                Adaptation Tips: 
-                [3 points highlighting THE MOST TRANSFORMATIVE CHANGES - what seemed impossible in 1995 but is now commonplace in 2025. Focus on the biggest paradigm shifts in how software is sold, delivered, and supported.]
+                What Was Impossible Then, Now Possible:
+                [3 specific transformative changes that would be MOST RELEVANT to a {role} - focus on game-changing capabilities that specifically transform how someone in this exact role works today]
                 
-                Keep bullets concise (1-2 lines each). Focus on concrete examples that enterprise 
-                customers would find valuable."""},
-                {"role": "user", "content": f"My role is {role}. Give me a concise 1995 vs 2025 comparison focusing on tools, work culture, and technology in the context of enterprise software sales and delivery. For the third section, focus specifically on what was impossible in 1995 but is now possible/common in 2025 - the most transformative changes."}
+                Every single bullet point must directly connect to the {role}'s daily work. Avoid generic enterprise software facts that aren't directly relevant to this specific role. Use concrete examples, specific tool names, and realistic workflows."""},
+                {"role": "user", "content": f"My role is {role}. Create a highly personalized comparison showing how my specific job has evolved from 1995 to 2025, focusing on the tools, processes, and environment I would have used then versus now. For the third section, highlight the most dramatic transformations specifically relevant to someone in my role."}
             ],
-            temperature=0.6,
-            max_tokens=750
+            temperature=0.7,  # Slightly higher temperature for more creative, personalized responses
+            max_tokens=800    # Increased token limit for more detailed responses
         )
         
         return response.choices[0].message.content
