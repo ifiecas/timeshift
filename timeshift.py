@@ -155,7 +155,7 @@ else:
 
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<div class="info-msg">Enter your job role to journey through 30 years of evolution — see how your profession has transformed from 1995 to 2025.</div>', unsafe_allow_html=True)
-    role = st.text_input("What's your professional role?", placeholder="Enter your role/designation")
+    role = st.text_input("What's your professional role?", placeholder="Enter your role/designation", label_visibility="collapsed")
     generate = st.button("Generate Comparison", use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
