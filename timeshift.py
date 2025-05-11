@@ -65,6 +65,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Show global header image
+st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_column_width=True)
+
 ACCESS_CODE = "swo"
 
 if "auth_status" not in st.session_state:
@@ -125,7 +128,6 @@ def format_result(text, role):
 # Login Page
 # =============================
 if not st.session_state.auth_status:
-    st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_column_width=True)
     st.markdown('<div class="info-msg">Enter access code to discover how job roles and skills have shifted.</div>', unsafe_allow_html=True)
     code_input = st.text_input("Access code:", type="password")
     if st.button("Enter TimeShift", use_container_width=True):
@@ -134,7 +136,6 @@ if not st.session_state.auth_status:
             st.rerun()
         else:
             st.error("Invalid code")
-    st.markdown('<div class="footer">Built by <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
 
 # =============================
 # Main App
@@ -146,7 +147,6 @@ else:
             st.session_state.auth_status = False
             st.rerun()
 
-    st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_column_width=True)
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<div class="info-msg">Enter your job role in enterprise software to see how it changed from 1995 to 2025.</div>', unsafe_allow_html=True)
     role = st.text_input("What's your professional role?", placeholder="Enter your role/designation")
@@ -164,4 +164,5 @@ else:
             st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="footer">Built for fun & learning by <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
+# Global footer displayed for all states
+st.markdown('<div class="footer">Built for fun & learning by <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
