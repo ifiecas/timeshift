@@ -37,13 +37,11 @@ st.markdown("""
         border-radius: 4px;
         padding: 0.5rem 1rem;
     }
-    .card {
-        background-color: white;
-        padding: 1.5rem;
-        border-radius: 4px;
-        border: 1px solid #EEEEEE;
-        margin-bottom: 1rem;
+    /* Remove white container box */
+    div[data-testid="stHorizontalBlock"] {
+        display: none;
     }
+    /* Style the results box */
     .results {
         background-color: white;
         padding: 1.5rem;
