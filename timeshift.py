@@ -68,7 +68,7 @@ st.markdown("""
 # Show global header image
 st.image("https://i.postimg.cc/RZMSph8J/timeshift-logo.png", use_container_width=True)
 
-ACCESS_CODE = "swo"
+ACCESS_CODE = os.getenv("ACCESS_CODE")
 
 if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
