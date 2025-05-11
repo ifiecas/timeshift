@@ -131,6 +131,10 @@ def format_result(text, role):
     # Just return wrapped text since it's already formatted as a 1-minute read
     return f'<div class="transform-section"><p>{text.strip()}</p></div>'
 
+# Initialize variables for role and generate
+role = None
+generate = False
+
 # =============================
 # Login Page
 # =============================
@@ -178,7 +182,7 @@ if role and generate:
         st.warning("You've reached the maximum number of comparisons allowed per session. Try again in one hour. ")
         st.stop()
     st.session_state.request_count += 1
-    with st.spinner("Generating comparison..."):
+    with st.spinner("Hold on, jumping through time from 1995 to 2025... almost ready!"):
         result = fetch_timeshift_story(role)
     st.markdown('<div class="results">', unsafe_allow_html=True)
     st.subheader(f"{role}: 1995 vs 2025")
