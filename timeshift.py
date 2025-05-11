@@ -156,11 +156,20 @@ else:
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<div class="info-msg">Enter your job role to journey through 30 years of evolution — see how your profession has transformed from 1995 to 2025.</div>', unsafe_allow_html=True)
     
-    role = st.text_input("", placeholder="Enter your professional role", label_visibility="collapsed")
-generate = st.button("Generate Comparison", use_container_width=True)
+    with st.container():
+        role = st.text_input("", placeholder="Enter your professional role", label_visibility="collapsed")
+        generate = st.button("Generate Comparison", use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
+        if "request_count" not in st.session_state:
+    st.session_state.request_count = 0
+
     if role and generate:
+        if st.session_state.request_count >= 3:
+            st.warning("You've reached the maximum number of comparisons allowed per session.")
+            st.stop()
+        st.session_state.request_count += 1
         with st.spinner("Generating comparison..."):
             result = fetch_timeshift_story(role)
         st.markdown('<div class="results">', unsafe_allow_html=True)
