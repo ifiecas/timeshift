@@ -163,17 +163,17 @@ else:
     st.markdown('</div>', unsafe_allow_html=True)
 import time
 
-    # Initialize request count and timestamp
-    if "request_count" not in st.session_state:
-        st.session_state.request_count = 0
-        st.session_state.request_time = time.time()
+# Initialize request count and timestamp
+if "request_count" not in st.session_state:
+    st.session_state.request_count = 0
+    st.session_state.request_time = time.time()
 
     # Reset count if more than 1 hour has passed
-    if time.time() - st.session_state.request_time > 3600:
-        st.session_state.request_count = 0
-        st.session_state.request_time = time.time()
+if time.time() - st.session_state.request_time > 3600:
+    st.session_state.request_count = 0
+    st.session_state.request_time = time.time()
 
-    if role and generate:
+if role and generate:
         if st.session_state.request_count >= 3:
             st.warning("You've reached the maximum number of comparisons allowed per session. Try again in one hour. ")
             st.stop()
