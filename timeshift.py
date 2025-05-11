@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import requests
 from io import BytesIO
 from PIL import Image as PILImage
+import time
 
 # Load environment variables
 load_dotenv()
@@ -161,7 +162,6 @@ else:
         generate = st.button("Generate Comparison", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
-import time
 
 # Initialize request count and timestamp
 if "request_count" not in st.session_state or "request_time" not in st.session_state:
@@ -173,25 +173,20 @@ if time.time() - st.session_state.request_time > 3600:
     st.session_state.request_count = 0
     st.session_state.request_time = time.time()
 
-    # Reset count if more than 1 hour has passed
-if time.time() - st.session_state.request_time > 3600:
-    st.session_state.request_count = 0
-    st.session_state.request_time = time.time()
-
 if role and generate:
-        if st.session_state.request_count >= 3:
-            st.warning("You've reached the maximum number of comparisons allowed per session. Try again in one hour. ")
-            st.stop()
-        st.session_state.request_count += 1
-        with st.spinner("Generating comparison..."):
-            result = fetch_timeshift_story(role)
-        st.markdown('<div class="results">', unsafe_allow_html=True)
-        st.subheader(f"{role}: 1995 vs 2025")
-        st.markdown(format_result(result, role), unsafe_allow_html=True)
-        if st.button("Start Over", use_container_width=True):
-            st.session_state.role_input = ""
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
+    if st.session_state.request_count >= 3:
+        st.warning("You've reached the maximum number of comparisons allowed per session. Try again in one hour. ")
+        st.stop()
+    st.session_state.request_count += 1
+    with st.spinner("Generating comparison..."):
+        result = fetch_timeshift_story(role)
+    st.markdown('<div class="results">', unsafe_allow_html=True)
+    st.subheader(f"{role}: 1995 vs 2025")
+    st.markdown(format_result(result, role), unsafe_allow_html=True)
+    if st.button("Start Over", use_container_width=True):
+        st.session_state.role_input = ""
+        st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Global footer displayed for all states
 st.markdown('''
