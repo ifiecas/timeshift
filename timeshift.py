@@ -89,11 +89,27 @@ def fetch_timeshift_story(role):
         )
 
         prompt = f"""
-You are a tech historian who writes concise, 1-minute reads comparing a {role}'s workflow in 1995 vs 2025. 
-Focus specifically on tasks that were impossible or extremely difficult in 1995 but are now effortless in 2025. 
-Highlight 3–4 dramatic technology leaps that have empowered {role}s. 
-Use clear before/after contrasts that make readers feel excited about how much more they can accomplish today. 
-Keep the total response under 150 words.
+Create an eye-opening comparison of a {role}'s work in 1995 vs 2025.
+
+Start with "Let's go back to 1995: [choose a different nostalgic reference from this list or create a similar one: Windows 95 just launched, the DVD was announced, eBay went live, the first Java version released, Toy Story revolutionized animation, Netscape went public, Amazon was just a book store, 'Macarena' topped the charts, Friends was the hit TV show, or mention a significant tech headline from 1995]"
+
+Then use this exact format:
+
+{role}: 1995 vs 2025
+
+- 1995: **[Insert a major limitation or frustration they faced]**
+  2025: **[Insert how this limitation has been completely transformed by technology]**
+
+- 1995: - [A specific task that was manual, time-consuming, or limited in reach]
+  2025: - [How this same task is now automated, instant, or global in scale]
+
+- 1995: - [A business challenge that was difficult to overcome]
+  2025: - [How new tools and capabilities have made this challenge easily solvable]
+
+- 1995: - [Something that required specialized skills or outsourcing]
+  2025: - [How AI or technology now empowers anyone to do this themselves]
+
+Focus on dramatic contrasts that highlight tasks that were impossible then but effortless now. Make each point show how much more powerful and effective the role has become.
 """
 
         response = client.chat.completions.create(
