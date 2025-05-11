@@ -88,11 +88,19 @@ def fetch_timeshift_story(role):
             azure_endpoint=endpoint
         )
 
+        prompt = f"""
+You are a tech historian who writes concise, 1-minute reads comparing a {role}'s workflow in 1995 vs 2025. 
+Focus specifically on tasks that were impossible or extremely difficult in 1995 but are now effortless in 2025. 
+Highlight 3–4 dramatic technology leaps that have empowered {role}s. 
+Use clear before/after contrasts that make readers feel excited about how much more they can accomplish today. 
+Keep the total response under 150 words.
+"""
+
         response = client.chat.completions.create(
             model=deployment_name,
             messages=[
-                {"role": "system", "content": f"""You are a tech historian specializing in enterprise software evolution who creates highly customized comparisons between 1995 and 2025 specifically for the role of \"{role}\"."""},
-                {"role": "user", "content": f"My role is {role}. Please compare how it evolved from 1995 to 2025."}
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f"My role is {role}. Generate the 1-minute read as described."}
             ],
             temperature=0.7,
             max_tokens=800
@@ -102,32 +110,8 @@ def fetch_timeshift_story(role):
         return f"Error generating comparison. Please try again. Technical details: {str(e)}"
 
 def format_result(text, role):
-    formatted = ""
-
-    # Extract transformation blurb
-    if "Impossible Then, Possible Now:" in text:
-        parts = text.split("Impossible Then, Possible Now:")
-        blurb = parts[1].strip().split("1995:")[0].strip()
-        formatted += f'<div class="transform-section"><strong>What\'s Impossible in 1995, Now Possible in 2025 for {role}s:</strong><p>{blurb}</p></div>'
-        text = "1995:" + text.split("1995:")[1]
-
-    # Extract 3 most critical differences
-    if "1995:" in text and "2025:" in text:
-        year_1995 = text.split("1995:")[1].split("2025:")[0].strip().splitlines()
-        year_2025 = text.split("2025:")[1].strip().splitlines()
-
-        combined_points = list(zip(year_1995, year_2025))
-        combined_points = [pair for pair in combined_points if pair[0].strip() and pair[1].strip()][:3]  # Get top 3 pairs
-
-        formatted += '<div class="year-section"><ul>'
-        for before, after in combined_points:
-            formatted += f'<li><strong>1995:</strong> {before.strip()}<br><strong>2025:</strong> {after.strip()}</li>'
-        formatted += '</ul></div>'
-
-    else:
-        formatted += f'<div>{text}</div>'
-
-    return formatted
+    # Just return wrapped text since it's already formatted as a 1-minute read
+    return f'<div class="transform-section"><p>{text.strip()}</p></div>'
 
 # =============================
 # Login Page
