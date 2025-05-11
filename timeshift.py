@@ -164,7 +164,12 @@ else:
 import time
 
 # Initialize request count and timestamp
-if "request_count" not in st.session_state:
+if "request_count" not in st.session_state or "request_time" not in st.session_state:
+    st.session_state.request_count = 0
+    st.session_state.request_time = time.time()
+
+# Reset count if more than 1 hour has passed
+if time.time() - st.session_state.request_time > 3600:
     st.session_state.request_count = 0
     st.session_state.request_time = time.time()
 
