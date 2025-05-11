@@ -1,4 +1,4 @@
-# ⏳ TimeShift
+# TimeShift
 
 ![TimeShift Screenshot](https://i.postimg.cc/qvswc8Zn/Screenshot-2025-05-11-at-4-44-47-pm.png)
 
