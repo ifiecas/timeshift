@@ -2,7 +2,7 @@
 
 ![TimeShift Screenshot](https://i.postimg.cc/qvswc8Zn/Screenshot-2025-05-11-at-4-44-47-pm.png)
 
-**TimeShift** is an AI-powered web app that lets users explore how job roles and skills have evolved over the last three decades. Built with Streamlit and powered by Azure AI Foundry, it’s inspired by Morgan Housel’s *Same As Ever* — highlighting how humans constantly pursue efficiency even as the world changes.
+**TimeShift** is an AI-powered platform that visualizes how careers and skills have evolved over three decades. Built with Streamlit and Azure AI Foundry, this tool reveals a timeless insight inspired by Morgan Housel's Same As Ever: while job requirements constantly change, our human drive to make work more efficient remains the same.
 
 ---
 
