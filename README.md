@@ -12,10 +12,7 @@
 > If you’d like to try the app, feel free to reach out to me for access.
 
 
-Try the app here:  
-👉 [https://timeshift-app-b0d4aha0fvb5ftda.australiaeast-01.azurewebsites.net/](https://timeshift-app-b0d4aha0fvb5ftda.australiaeast-01.azurewebsites.net/)
-
-
+👉 Try the app here: [Launch TimeShift](https://timeshift-app-b0d4aha0fvb5ftda.australiaeast-01.azurewebsites.net/)
 
 ---
 
