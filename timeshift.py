@@ -91,7 +91,8 @@ def fetch_timeshift_story(role):
         prompt = f"""
 Create an eye-opening comparison of a {role}'s work in 1995 vs 2025.
 
-Start with "Let's go back to 1995: [choose a different nostalgic reference from this list or create a similar one: Windows 95 just launched, the DVD was announced, eBay went live, the first Java version released, Toy Story revolutionized animation, Netscape went public, Amazon was just a book store, 'Macarena' topped the charts, Friends was the hit TV show, or mention a significant tech headline from 1995]"
+Start with this exact phrase:
+"Let's go back to 1995: [choose a nostalgic reference from this list or create a similar one: Windows 95 just launched, the DVD was announced, eBay went live, the first Java version released, Toy Story revolutionized animation, Netscape went public, Amazon was just a book store, 'Macarena' topped the charts, Friends was the hit TV show, or another iconic 1995 moment]"
 
 Then use this exact format:
 
@@ -109,7 +110,7 @@ Then use this exact format:
 - 1995: - [Something that required specialized skills or outsourcing]
   2025: - [How AI or technology now empowers anyone to do this themselves]
 
-Focus on dramatic contrasts that highlight tasks that were impossible then but effortless now. Make each point show how much more powerful and effective the role has become.
+The nostalgic pop culture opening is required. Focus on dramatic contrasts that show how much more powerful and effective the role has become.
 """
 
         response = client.chat.completions.create(
