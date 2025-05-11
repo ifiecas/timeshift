@@ -12,7 +12,7 @@ load_dotenv()
 # Set Streamlit page config
 st.set_page_config(
     page_title="TimeShift",
-    page_icon="⏳",
+    page_icon="https://i.postimg.cc/bvW0mz3x/Screenshot-2025-05-11-at-2-18-40-pm.png",
     initial_sidebar_state="collapsed"
 )
 
@@ -66,7 +66,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Show global header image
-st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_container_width=True)
+st.image("https://i.postimg.cc/bvW0mz3x/Screenshot-2025-05-11-at-2-18-40-pm.png", use_container_width=True)
 
 ACCESS_CODE = "swo"
 
