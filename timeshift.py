@@ -1,7 +1,6 @@
 import streamlit as st
 from openai import AzureOpenAI
 import os
-from datetime import datetime
 from dotenv import load_dotenv
 import requests
 from io import BytesIO
@@ -9,16 +8,6 @@ from PIL import Image as PILImage
 
 # Load environment variables
 load_dotenv()
-
-# Load image from URL
-def load_image_from_url(url):
-    try:
-        response = requests.get(url)
-        img = PILImage.open(BytesIO(response.content))
-        return img
-    except Exception as e:
-        st.error(f"Error loading image: {e}")
-        return None
 
 # Set Streamlit page config
 st.set_page_config(
@@ -32,8 +21,8 @@ st.markdown("""
 <style>
     body {
         font-family: Helvetica, Arial, sans-serif;
-        color: #333;
         background-color: #FAF9F6;
+        color: #333;
     }
     .stApp, .main .block-container {
         background-color: #FAF9F6;
@@ -81,28 +70,26 @@ ACCESS_CODE = "swo"
 if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
 
-if "role_input" not in st.session_state:
-    st.session_state.role_input = ""
-
 def fetch_timeshift_story(role):
     try:
-        client = AzureOpenAI(
-            api_key=os.getenv("AZURE_OPENAI_KEY"),
-            api_version="2023-12-01-preview",
-            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
-        )
+        api_key = os.getenv("AZURE_OPENAI_KEY")
+        endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
         deployment_name = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+
+        if not api_key or not endpoint or not deployment_name:
+            raise ValueError("Missing Azure OpenAI credentials.")
+
+        client = AzureOpenAI(
+            api_key=api_key,
+            api_version="2023-12-01-preview",
+            azure_endpoint=endpoint
+        )
 
         response = client.chat.completions.create(
             model=deployment_name,
             messages=[
-                {"role": "system", "content": f"""You are a tech historian specializing in enterprise software evolution who creates highly customized comparisons between 1995 and 2025 specifically for the role of "{role}". 
-
-                Research deeply into tools, challenges, and workflows that a "{role}" would have faced. Provide:
-                - "Impossible Then, Possible Now"
-                - 1995 section with specific tools
-                - 2025 section with modern equivalents."""},
-                {"role": "user", "content": f"My role is {role}. Please compare how it evolved from 1995 to 2025 in that format."}
+                {"role": "system", "content": f"""You are a tech historian specializing in enterprise software evolution who creates highly customized comparisons between 1995 and 2025 specifically for the role of \"{role}\"."""},
+                {"role": "user", "content": f"My role is {role}. Please compare how it evolved from 1995 to 2025."}
             ],
             temperature=0.7,
             max_tokens=800
@@ -138,8 +125,7 @@ def format_result(text, role):
 # Login Page
 # =============================
 if not st.session_state.auth_status:
-    st.title("⏳ TimeShift")
-    st.write("Compare professional roles: 1995 vs 2025")
+    st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_column_width=True)
     st.markdown('<div class="info-msg">Enter access code to discover how job roles and skills have shifted.</div>', unsafe_allow_html=True)
     code_input = st.text_input("Access code:", type="password")
     if st.button("Enter TimeShift", use_container_width=True):
@@ -160,12 +146,12 @@ else:
             st.session_state.auth_status = False
             st.rerun()
 
-    with st.container():
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.markdown('<div class="info-msg">Enter your job role in enterprise software to see how it changed.</div>', unsafe_allow_html=True)
-        role = st.text_input("What's your professional role?", placeholder="Enter your role/designation")
-        generate = st.button("Generate Comparison", use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+    st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_column_width=True)
+    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="info-msg">Enter your job role in enterprise software to see how it changed from 1995 to 2025.</div>', unsafe_allow_html=True)
+    role = st.text_input("What's your professional role?", placeholder="Enter your role/designation")
+    generate = st.button("Generate Comparison", use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if role and generate:
         with st.spinner("Generating comparison..."):
@@ -178,4 +164,4 @@ else:
             st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="footer">Built by <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
+    st.markdown('<div class="footer">Built for fun & learning by <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
