@@ -134,7 +134,7 @@ def format_result(text, role):
 # Login Page
 # =============================
 if not st.session_state.auth_status:
-    st.markdown('<div class="info-msg">Enter access code to discover how job roles and skills have shifted.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="info-msg">Enter your access code to unlock a time capsule revealing how your profession has transformed from 1995 to today. See what\'s now possible that once seemed like science fiction.</div>', unsafe_allow_html=True)
     code_input = st.text_input("Access code:", type="password")
     if st.button("Enter TimeShift", use_container_width=True):
         if code_input == ACCESS_CODE:
@@ -154,7 +154,7 @@ else:
             st.rerun()
 
     st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.markdown('<div class="info-msg">Enter your job role in enterprise software to see how it changed from 1995 to 2025.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="info-msg">Enter your job role to journey through 30 years of evolution — see how your profession has transformed from 1995 to 2025.</div>', unsafe_allow_html=True)
     role = st.text_input("What's your professional role?", placeholder="Enter your role/designation")
     generate = st.button("Generate Comparison", use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
