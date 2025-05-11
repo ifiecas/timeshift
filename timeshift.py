@@ -161,8 +161,7 @@ else:
         generate = st.button("Generate Comparison", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
-
-        import time
+import time
 
     # Initialize request count and timestamp
     if "request_count" not in st.session_state:
@@ -176,7 +175,7 @@ else:
 
     if role and generate:
         if st.session_state.request_count >= 3:
-            st.warning("You've reached the maximum number of comparisons allowed per session.")
+            st.warning("You've reached the maximum number of comparisons allowed per session. Try again in one hour. ")
             st.stop()
         st.session_state.request_count += 1
         with st.spinner("Generating comparison..."):
