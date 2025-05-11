@@ -66,7 +66,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Show global header image
-st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_column_width=True)
+st.image("https://i.postimg.cc/prBVFzQT/TIME-1.png", use_container_width=True)
 
 ACCESS_CODE = "swo"
 
@@ -103,25 +103,30 @@ def fetch_timeshift_story(role):
 
 def format_result(text, role):
     formatted = ""
+
+    # Extract transformation blurb
     if "Impossible Then, Possible Now:" in text:
         parts = text.split("Impossible Then, Possible Now:")
-        formatted += f'<div class="transform-section"><strong>What Was Impossible for {role}s Then, Now Possible</strong><p>{parts[1].strip().split("1995:")[0].strip()}</p></div>'
+        blurb = parts[1].strip().split("1995:")[0].strip()
+        formatted += f'<div class="transform-section"><strong>What\'s Impossible in 1995, Now Possible in 2025 for {role}s:</strong><p>{blurb}</p></div>'
         text = "1995:" + text.split("1995:")[1]
 
+    # Extract 3 most critical differences
     if "1995:" in text and "2025:" in text:
-        year_1995 = text.split("1995:")[1].split("2025:")[0].strip()
-        year_2025 = text.split("2025:")[1].strip()
-        formatted += '<div class="year-section"><strong>1995</strong><ul>'
-        for line in year_1995.splitlines():
-            if line.strip():
-                formatted += f'<li>{line.strip()}</li>'
-        formatted += '</ul></div><div class="year-section"><strong>2025</strong><ul>'
-        for line in year_2025.splitlines():
-            if line.strip():
-                formatted += f'<li>{line.strip()}</li>'
+        year_1995 = text.split("1995:")[1].split("2025:")[0].strip().splitlines()
+        year_2025 = text.split("2025:")[1].strip().splitlines()
+
+        combined_points = list(zip(year_1995, year_2025))
+        combined_points = [pair for pair in combined_points if pair[0].strip() and pair[1].strip()][:3]  # Get top 3 pairs
+
+        formatted += '<div class="year-section"><ul>'
+        for before, after in combined_points:
+            formatted += f'<li><strong>1995:</strong> {before.strip()}<br><strong>2025:</strong> {after.strip()}</li>'
         formatted += '</ul></div>'
+
     else:
         formatted += f'<div>{text}</div>'
+
     return formatted
 
 # =============================
@@ -165,4 +170,9 @@ else:
         st.markdown('</div>', unsafe_allow_html=True)
 
 # Global footer displayed for all states
-st.markdown('<div class="footer">Built for fun & learning by <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a></div>', unsafe_allow_html=True)
+st.markdown('''
+<div class="footer">
+    Built for fun & learning by <a href="https://ifiecas.com/" target="_blank">Ivy Fiecas-Borjal</a><br>
+    Powered by OpenAI's GPT-4o via Azure AI Foundry
+</div>
+''', unsafe_allow_html=True)
