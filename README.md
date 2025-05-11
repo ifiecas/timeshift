@@ -4,7 +4,7 @@
 
 **TimeShift** is an AI-powered web app that lets users explore how job roles and skills have evolved over the last three decades. Built with Streamlit and powered by Azure AI Foundry, it’s inspired by Morgan Housel’s *Same As Ever* — highlighting how humans constantly pursue efficiency even as the world changes.
 
-> **Access Code Notice:** To reduce bot traffic and prevent automated scraping, the app requires users to enter an access code (`swo`) on the homepage.
+> **Access Code Notice:** To reduce bot traffic and prevent automated scraping, the app requires users to enter an access code on the homepage.
 
 ---
 
