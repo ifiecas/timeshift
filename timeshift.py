@@ -6,6 +6,7 @@ import requests
 from io import BytesIO
 from PIL import Image as PILImage
 import time
+import datetime
 
 # Load environment variables
 load_dotenv()
@@ -161,21 +162,43 @@ else:
     role = st.text_input("", placeholder="Enter your professional role", label_visibility="collapsed")
     generate = st.button("Generate Comparison", use_container_width=True)
 
-# Initialize request count and timestamp
-if "request_count" not in st.session_state or "request_time" not in st.session_state:
-    st.session_state.request_count = 0
-    st.session_state.request_time = time.time()
+# Initialize request tracking
+if "request_tracking" not in st.session_state:
+    st.session_state.request_tracking = {}
 
-# Reset count if more than 1 hour has passed
-if time.time() - st.session_state.request_time > 3600:
-    st.session_state.request_count = 0
-    st.session_state.request_time = time.time()
+# Get a unique identifier for the user session
+def get_user_identifier():
+    if "user_id" not in st.session_state:
+        st.session_state.user_id = str(time.time()) + str(os.urandom(8).hex())
+    return st.session_state.user_id
+
+# Get the current hour (for rate limiting)
+def get_current_hour():
+    return datetime.datetime.now().strftime("%Y-%m-%d-%H")
 
 if role and generate:
-    if st.session_state.request_count >= 3:
-        st.warning("You've reached the maximum number of comparisons allowed per session. Try again in one hour. ")
-        st.stop()
-    st.session_state.request_count += 1
+    # Get unique user ID and current hour
+    user_id = get_user_identifier()
+    current_hour = get_current_hour()
+    
+    # Initialize user in tracking dict if not present
+    if user_id not in st.session_state.request_tracking:
+        st.session_state.request_tracking[user_id] = {}
+    
+    # Count requests in the current hour
+    if current_hour in st.session_state.request_tracking[user_id]:
+        request_count = st.session_state.request_tracking[user_id][current_hour]
+        if request_count >= 1:  # Allow only 1 request per hour per user
+            st.warning("You've reached the maximum number of comparisons allowed per hour. Please try again in the next hour.")
+            st.stop()
+        st.session_state.request_tracking[user_id][current_hour] = request_count + 1
+    else:
+        # First request in this hour
+        st.session_state.request_tracking[user_id][current_hour] = 1
+    
+    # Clean up old entries (keep only current hour)
+    st.session_state.request_tracking[user_id] = {current_hour: st.session_state.request_tracking[user_id].get(current_hour, 0)}
+    
     with st.spinner("Hold on, jumping through time from 1995 to 2025... almost ready!"):
         result = fetch_timeshift_story(role)
     st.markdown('<div class="results">', unsafe_allow_html=True)
