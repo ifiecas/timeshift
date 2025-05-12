@@ -176,7 +176,47 @@ def get_user_identifier():
 def get_current_hour():
     return datetime.datetime.now().strftime("%Y-%m-%d-%H")
 
+# Validate if input is a job role/profession
+def is_valid_profession(input_text):
+    # Basic validation
+    if not input_text or input_text.strip() == "":
+        return False
+    
+    # Input should be reasonably sized (not too short, not too long)
+    if len(input_text) < 3 or len(input_text) > 100:
+        return False
+    
+    # Check for excessive special characters or numbers that wouldn't typically be in a profession
+    special_char_count = sum(1 for char in input_text if not char.isalnum() and not char.isspace())
+    if special_char_count > 3 or special_char_count / len(input_text) > 0.2:
+        return False
+    
+    # Check for excessive numbers (most professions don't have many numbers)
+    number_count = sum(1 for char in input_text if char.isdigit())
+    if number_count > 2:
+        return False
+    
+    # Check for common non-profession patterns
+    non_profession_patterns = [
+        "http", "www", "://"  # URLs
+    ]
+    if any(pattern in input_text.lower() for pattern in non_profession_patterns):
+        return False
+    
+    # Most professions are 1-4 words
+    word_count = len(input_text.split())
+    if word_count > 6:
+        return False
+    
+    # If the input passes all these checks, we'll consider it a valid profession
+    return True
+
 if role and generate:
+    # Validate if the input is a profession/job role
+    if not is_valid_profession(role):
+        st.error("Please enter a valid job role or professional designation. Examples: Software Developer, Marketing Manager, Teacher, Doctor, etc.")
+        st.stop()
+        
     # Get unique user ID and current hour
     user_id = get_user_identifier()
     current_hour = get_current_hour()
